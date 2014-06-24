@@ -1072,19 +1072,21 @@ int main(int argc, char *argv[]) {
   start_mongoose(argc, argv);
 
   // Desktop Mongoose modification - Start web browser simultaneously with the server:
-  if(fork() == 0){ 
-         // Child process will return 0 from fork()
-         printf("Starting browser [%s] and requesting address [http://localhost:%s]\n\n",
-                mg_get_option(server, "browser"),
-                mg_get_option(server, "listening_port"));
-         fflush(stdout);
-         char browser_command[1000];
-         strcpy(browser_command, mg_get_option(server, "browser"));
-         strcat(browser_command, " ");
-         strcat(browser_command, "http://localhost:");
-         strcat(browser_command, mg_get_option(server, "listening_port"));
-         system(browser_command);
-         exit(0);
+  if ((unsigned)strlen(mg_get_option(server, "browser")) > 2) {
+    if(fork() == 0){ 
+           // Child process will return 0 from fork()
+           printf("Starting browser [%s] and requesting address [http://localhost:%s]\n\n",
+                  mg_get_option(server, "browser"),
+                  mg_get_option(server, "listening_port"));
+           fflush(stdout);
+           char browser_command[1000];
+           strcpy(browser_command, mg_get_option(server, "browser"));
+           strcat(browser_command, " ");
+           strcat(browser_command, "http://localhost:");
+           strcat(browser_command, mg_get_option(server, "listening_port"));
+           system(browser_command);
+           exit(0);
+    }
   }
 
   printf("%s serving [%s] on port %s\n",

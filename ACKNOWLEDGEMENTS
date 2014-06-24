@@ -1,5 +1,5 @@
 
- MONGOOSE FOR PERL EXECUTING BROWSER - THANKS, ACKNOWLEDGEMENTS AND REFERENCES:
+ DESKTOP MONGOOSE - THANKS, ACKNOWLEDGEMENTS AND REFERENCES:
 
  Amata mea Argeia - gratiam magnam tibi ago!
  Patientia tua in studiis meis computatoriis auxilium meum maximum!
@@ -7,11 +7,10 @@
  Thanks to Sergey Lyubka, author of Mongoose web server,
  for creating Mongoose and providing quality support to Mongoose users through
  https://groups.google.com/forum/#!forum/mongoose-users
- More about Mongoose web server:
- http://cesanta.com/docs.html?Mongoose.md
- https://github.com/cesanta/mongoose
- https://github.com/cesanta/mongoose/blob/master/docs/API.md
+
+ More about Mongoose 5 web server:
  https://github.com/ctrix/free-mongoose/blob/master/UserManual.md
 
  http://www.cplusplus.com/reference/cstring/strlen/
  http://www.cplusplus.com/reference/cstring/strcat/
+ http://stackoverflow.com/questions/5237482/how-do-i-execute-external-program-within-c-code-in-linux-with-arguments

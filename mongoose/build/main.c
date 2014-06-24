@@ -1054,7 +1054,7 @@ int main(int argc, char *argv[]) {
 }
 #else
 
-// Modification for the Perl Executing Browser - Quit from URI function:
+// Desktop Mongoose modification - Quit from URI function:
 static int quit_uri(struct mg_connection *conn) {
   if ((unsigned)strlen(mg_get_option(server, "quit_token")) > 24) {
     printf("Exiting after quit URI has been requested.\n");
@@ -1070,18 +1070,37 @@ static int quit_uri(struct mg_connection *conn) {
 int main(int argc, char *argv[]) {
   init_server_name();
   start_mongoose(argc, argv);
+
+  // Desktop Mongoose modification - Start web browser simultaneously with the server:
+  if(fork() == 0){ 
+         // Child process will return 0 from fork()
+         printf("Starting browser [%s] and requesting address [http://localhost:%s]\n\n",
+                mg_get_option(server, "browser"),
+                mg_get_option(server, "listening_port"));
+         fflush(stdout);
+         char browser_command[1000];
+         strcpy(browser_command, mg_get_option(server, "browser"));
+         strcat(browser_command, " ");
+         strcat(browser_command, "http://localhost:");
+         strcat(browser_command, mg_get_option(server, "listening_port"));
+         system(browser_command);
+         exit(0);
+  }
+
   printf("%s serving [%s] on port %s\n",
          server_name, mg_get_option(server, "document_root"),
          mg_get_option(server, "listening_port"));
-         char quit_uri_password[1000]; // Modification for the Perl Executing Browser
-         strcpy (quit_uri_password, "/quit__"); // Modification for the Perl Executing Browser
-         strcat (quit_uri_password, mg_get_option(server, "quit_token")); // Modification for the Perl Executing Browser
-         mg_add_uri_handler (server, quit_uri_password, quit_uri); // Modification for the Perl Executing Browser
   fflush(stdout);  // Needed, Windows terminals might not be line-buffered
+
+  char quit_uri_password[1000]; // Desktop Mongoose modification
+  strcpy (quit_uri_password, "/quit__"); // Desktop Mongoose modification
+  strcat (quit_uri_password, mg_get_option(server, "quit_token")); // Desktop Mongoose modification
+  mg_add_uri_handler (server, quit_uri_password, quit_uri); // Desktop Mongoose modification
+
   while (exit_flag == 0) {
     mg_poll_server(server, 1000);
   }
-  printf("\nExiting on signal %d ...", exit_flag); // Modification for the Perl Executing Browser
+  printf("\nExiting on signal %d ...", exit_flag); // Desktop Mongoose modification
   fflush(stdout);
   mg_destroy_server(&server);
   printf("%s\n", " done.");

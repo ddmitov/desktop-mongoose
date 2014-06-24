@@ -225,8 +225,8 @@ enum {
 #ifdef USE_SSL
   SSL_CERTIFICATE,
 #endif
-  URL_REWRITES, NUM_OPTIONS, QUIT_TOKEN
-}; // Modification for the Perl Executing Browser - QUIT_TOKEN
+  URL_REWRITES, NUM_OPTIONS, QUIT_TOKEN, BROWSER
+}; // Desktop Mongoose modification - QUIT_TOKEN, BROWSER
 
 struct mg_server {
   sock_t listening_sock;
@@ -359,7 +359,8 @@ static const char *static_config_options[] = {
   "ssl_certificate", NULL,
 #endif
   "url_rewrites", NULL,
-  "quit_token", NULL, // Modification for the Perl Executing Browser
+  "quit_token", NULL, // Desktop Mongoose modification
+  "browser", NULL, // Desktop Mongoose modification
   NULL
 };
 
